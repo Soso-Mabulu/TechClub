@@ -13,7 +13,7 @@ $name = $_POST['name'];
 $email = $_POST['email'];
 $description = $_POST['description'];
 $date = $_POST['date'];
-$time = $_POST['time'];
+
 
 // Create a new PHPMailer instance
 $mail = new PHPMailer();
@@ -42,7 +42,6 @@ $mail->Body .= '<p style="font-size: 16px; margin-bottom: 10px;"><strong>Name:</
 $mail->Body .= '<p style="font-size: 16px; margin-bottom: 10px;"><strong>Email:</strong> ' . $email . '</p>';
 $mail->Body .= '<p style="font-size: 16px; margin-bottom: 10px;"><strong>Description:</strong> ' . $description . '</p>';
 $mail->Body .= '<p style="font-size: 16px; margin-bottom: 10px;"><strong>Date:</strong> ' . $date . '</p>';
-$mail->Body .= '<p style="font-size: 16px; margin-bottom: 10px;"><strong>Time:</strong> ' . $time . '</p>';
 $mail->Body .= '</div>';
 $mail->Body .= '</body></html>';
 
@@ -52,15 +51,12 @@ $mail->isHTML(true);
 
 // Send the email
 if ($mail->send()) {
-  // Include the database connection file
-  require 'db_connection.php';
+  // Email sent successfully
 
-  // Prepare the SQL statement
-  $sql = "INSERT INTO bookings (name, email, description, date, time) VALUES (?, ?, ?, ?, ?)";
 
   // Prepare and execute the statement
   $stmt = $pdo->prepare($sql);
-  $stmt->execute([$name, $email, $description, $date, $time]);
+  $stmt->execute([$name, $email, $description, $date,]);
 
   // Check if the query was successful
   if ($stmt->rowCount() > 0) {
